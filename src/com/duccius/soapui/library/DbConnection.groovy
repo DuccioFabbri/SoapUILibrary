@@ -10,14 +10,14 @@ import org.apache.log4j.Logger
 
 
 class DbConnection {
-	org.apache.log4j.Logger log = new org.apache.log4j.Logger()
-	//def context
+	//org.apache.log4j.Logger log = new org.apache.log4j.Logger()
+	def log
+	def context
 	def testRunner
 	
 	def DbConnection()
 	{
-		com.eviware.soapui.support.GroovyUtils.registerJdbcDriver("com.mysql.jdbc.Driver")
-		log.info("cccc")
+		com.eviware.soapui.support.GroovyUtils.registerJdbcDriver("com.mysql.jdbc.Driver")		
 	}
 	def Connect()
 	{
@@ -28,7 +28,7 @@ class DbConnection {
 			def dbDriver = 'com.mysql.jdbc.Driver'
 			
 			def db = Sql.newInstance(dbURL,dbUserName,dbPassword,dbDriver)
-			log..info ("db. "+db)
+			log.info ("db. "+db)
 			//context.db = db
 							
 			def rows = db.rows("SELECT username, password, id, xpath, expected FROM soapui.login_data ORDER BY id")
