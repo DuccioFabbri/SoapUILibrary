@@ -14,6 +14,8 @@ class DbConnection {
 	def log
 	def context
 	def testRunner
+	def sqlTestsuite
+	def sqlTestcase
 	
 	def DbConnection()
 	{
@@ -30,9 +32,29 @@ class DbConnection {
 			def db = Sql.newInstance(dbURL,dbUserName,dbPassword,dbDriver)
 			log.info ("db. "+db)
 			//context.db = db
-							
-			def rows = db.rows("SELECT username, password, id, xpath, expected FROM soapui.login_data ORDER BY id")
-		    		    
+			
+			def mySql = "SELECT "+
+						"  username, "+
+						"  password, id, "+
+						"  xpath, "+
+						"  expected "+
+						"FROM "+
+						"  soapui.login_data "+
+						"WHERE "+						
+						"  testsuite= ?1.testsuite  "+
+						" AND  testcase= ?2.testcase "+ 
+						"ORDER BY "+
+						"  id"
+			// http://mrhaki.blogspot.it/2011/09/groovy-goodness-using-named-ordinal.html
+			log.info("sqlTestsuite: " + sqlTestsuite)
+			log.info("sqlTestcase: " + sqlTestcase)
+			//def rows = db.rows(mySql, [testsuite:'" + sqlTestsuite'], [testcase:'TC_esempio'])
+			//def rows = db.rows(mySql, [testsuite:sqlTestsuite], [testcase:sqlTestcase])
+			def rows = db.rows(mySql, [testsuite:sqlTestsuite], [testcase:'TC_esempio'])
+			//def rows = db.rows(mySql)
+						
+			log.info ("mySql: " + mySql)
+			
 		    log.info('Good: ' + rows.size())
 		    context.ite =rows.listIterator()
 			
