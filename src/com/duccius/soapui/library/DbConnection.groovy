@@ -50,7 +50,7 @@ class DbConnection {
 			log.info("sqlTestcase: " + sqlTestcase)
 			//def rows = db.rows(mySql, [testsuite:'" + sqlTestsuite'], [testcase:'TC_esempio'])
 			//def rows = db.rows(mySql, [testsuite:sqlTestsuite], [testcase:sqlTestcase])
-			def rows = db.rows(mySql, [testsuite:sqlTestsuite], [testcase:'TC_esempio'])
+			def rows = db.rows(mySql, [testsuite:sqlTestsuite], [testcase:sqlTestcase])
 			//def rows = db.rows(mySql)
 						
 			log.info ("mySql: " + mySql)
@@ -71,7 +71,8 @@ class DbConnection {
 			log.info('id'+ context.id + ' : ' +context.id)
 		
 			
-			def tcData = new TCData(context.ite)
+			//def tcData = new TCData(context.ite)
+			def tcData = new TCData(obj)
 			tcData.db = db
 			
 //			def curTC = testRunner.testCase

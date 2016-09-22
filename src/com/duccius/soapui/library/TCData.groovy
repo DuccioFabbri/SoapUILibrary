@@ -21,13 +21,14 @@ class TCData {
 		this.expected = expected		
 	}
 	
-	def TCData(iterator)
+	def TCData( row)
 	{
-		this.iterator = iterator
+		//this.iterator = iterator
 		
-		def row = iterator.getAt(0)
+		//def row = ite.getAt(0)
 		
 		this.username = row.get('username')
+		
 		this.passw = row.get('password')
 		this.xpath = row.get('xpath')
 		this.expected = row.get('expected')
