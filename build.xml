@@ -9,13 +9,7 @@
   	<property name="dist" location="dist"/>
 
 
-<target name="git_task">
-    <!-- Create the time stamp -->
-    <tstamp/>
-    <!-- Download from git -->
-	<!-- https://github.com/DuccioFabbri/SoapUILibrary.git -->
-	<git-clone-pull repository="http://tlrobinson.net/blog/2008/11/ant-tasks-for-git/ " dest="${clone_dest}" />
-  </target>
+
 
   <target name="init">
     <!-- Create the time stamp -->
@@ -28,25 +22,55 @@
   <target name="compile" depends="init"
         description="compile the source">
     <!-- Compile the java code from ${src} into ${build} -->
-    <javac srcdir="${src}" destdir="${build}"/>
+   
+	<javac srcdir="src" destdir="build"
+	executable="C:\\Program Files\\Java\\jdk1.8.0_51\\bin\\javac"
+         />
   </target>
 
-  <target name="dist" depends="compile"
+	<path id="groovy-path">
+        <fileset dir="lib" includes="groovy-all-2.4.7.jar" />
+    </path>
+
+	<!-- http://stackoverflow.com/questions/23243464/cant-run-groovyc-from-ant-build-xml -->
+    <taskdef name="groovyc"
+        classname="org.codehaus.groovy.ant.Groovyc"
+        classpathref="groovy-path" />		
+		
+	<target name="groovy_compile" depends="init">
+	<echo message="Compiling Groovy sources..." />
+		<groovyc destdir="build">            
+			<src path="src" />
+			<classpath>
+			  <path location="bin"/>
+			  <fileset dir="lib">
+				  <include name="*.jar" />
+			  </fileset>
+			</classpath>
+		</groovyc>
+	</target>
+
+  <target name="groovy_" depends="init">
+    <exec executable = "C:\\Program Files (x86)\\Groovy\\Groovy-2.4.7\\bin\\groovyc.exe" >
+		<arg value = "C:\\Temp\\SoapUILibrary\\src\\com\\duccius\\soapui\\library\\TCData.groovy" />		
+		<arg value = "C:\\Temp\\SoapUILibrary\\src\\com\\duccius\\soapui\\library\\DbConnection.groovy" />		
+	</exec>
+</target>			
+			
+  <target name="dist" depends="groovy_compile"
         description="generate the distribution">
     <!-- Create the distribution directory -->
-    <mkdir dir="${dist}/lib"/>
-
     <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
-    <jar jarfile="${dist}/example.jar" basedir="${build}"/>
+    <jar jarfile="${dist}/example.jar" basedir="C:\\Temp\\SoapUILibrary\\build"/>
   </target>
-
+<!--
   <target name="clean"
         description="clean up">
-    <!-- Delete the ${build} and ${dist} directory trees -->
+    
     <delete dir="${build}"/>
     <delete dir="${dist}"/>
   </target>
-
+-->
 <!-- http://tlrobinson.net/blog/2008/11/ant-tasks-for-git/ -->
 	
 	<macrodef name = "git">

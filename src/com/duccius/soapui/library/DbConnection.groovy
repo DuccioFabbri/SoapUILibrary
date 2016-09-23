@@ -8,7 +8,7 @@ import com.eviware.soapui.support.GroovyUtils
 import com.eviware.soapui.impl.wadl.inference.schema.Context
 import org.apache.log4j.Logger
 
-
+ 
 class DbConnection {
 	//org.apache.log4j.Logger log = new org.apache.log4j.Logger()
 	def log
